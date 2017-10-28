@@ -11,12 +11,20 @@ RUN apt-get install -y \
     python-rpi.gpio \
     python-smbus
 
-# Create app directory
-RUN mkdir -p /iot-led/app
+COPY config.txt /boot/config.txt
+COPY modules /etc/modules
+
+# Application setup
+RUN mkdir -p /iot-led
 WORKDIR /iot-led
 
 COPY . /iot-led
 
+RUN useradd -ms /bin/bash sensor
+RUN usermod -G i2c sensor
+RUN usermod -G gpio sensor
+
+USER sensor
 ENV HOME /iot-led
 
-CMD ["python", "main.py"]
+CMD ["python", "app/main.py"]

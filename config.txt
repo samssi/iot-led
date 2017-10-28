@@ -1,0 +1,6 @@
+# Enable audio (loads snd_bcm2835)
+dtparam=audio=on
+
+# Enable GPIO stuff
+dtparam=i2c1=on
+dtparam=spi=on
