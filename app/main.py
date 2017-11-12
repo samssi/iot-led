@@ -1,7 +1,9 @@
 import RPi.GPIO as GPIO
 import time
 import signal
-from flask import Flask
+from flask import Flask, request
+import json
+import sys
 
 app = Flask(__name__)
 
@@ -74,7 +76,11 @@ setup()
 ledOn(222, 20, 255)
 
 
-@app.route('/')
+@app.route('/color', methods=['POST'])
 def changeColor():
-    ledOn(50, 50, 50)
+    request_json = request.get_json()
+    r = request_json.get('r')
+    g = request_json.get('g')
+    b = request_json.get('b')
+    ledOn(r, g, b)
     return "Hello World!"
