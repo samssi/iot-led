@@ -64,7 +64,7 @@ def exit(signum, stack):
 def setup():
 	setupBoard()
 	signal.signal(signal.SIGINT, exit)
-    	signal.signal(signal.SIGTERM, exit)
+    signal.signal(signal.SIGTERM, exit)
 
 if __name__ == "__main__":
         try:
