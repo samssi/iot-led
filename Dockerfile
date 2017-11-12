@@ -1,4 +1,3 @@
-
 FROM resin/rpi-raspbian:jessie
 
 RUN apt-get update
@@ -10,14 +9,19 @@ RUN apt-get install -y \
     python-dev \
     libffi-dev \
     python-rpi.gpio \
-    python-smbus
+    python-smbus \
+    python-pip
+
+RUN pip install -U pip
+RUN pip install virtualenv
+RUN pip install flask
 
 # Application setup
 RUN mkdir -p /iot-led
 WORKDIR /iot-led
-
 ENV HOME /iot-led
-
 COPY . /iot-led
 
-CMD ["python", "/iot-led/app/main.py"]
+ENV FLASK_APP=/iot-led/app/main.py
+
+CMD ["flask", "run", "--host=0.0.0.0"]

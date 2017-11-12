@@ -1,6 +1,10 @@
 import RPi.GPIO as GPIO
 import time
 import signal
+from flask import Flask
+
+app = Flask(__name__)
+
 
 def setupBoard():
     global greenPwm
@@ -66,10 +70,11 @@ def setup():
     signal.signal(signal.SIGINT, exit)
     signal.signal(signal.SIGTERM, exit)
 
-if __name__ == "__main__":
-    try:
-        setup()
-        ledOn(222, 20, 255)
-        loop()
-    except KeyboardInterrupt:
-        destroy()
+setup()
+ledOn(222, 20, 255)
+
+
+@app.route('/')
+def changeColor():
+    ledOn(50, 50, 50)
+    return "Hello World!"
