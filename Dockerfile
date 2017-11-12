@@ -16,14 +16,8 @@ RUN apt-get install -y \
 RUN mkdir -p /iot-led
 WORKDIR /iot-led
 
-#RUN useradd -ms /bin/bash sensor
-#RUN usermod -G i2c sensor
-#RUN usermod -G gpio sensor
-#RUN chown -R sensor:sensor /iot-led
-
-#USER sensor
 ENV HOME /iot-led
 
 COPY . /iot-led
 
-CMD ["python", "/iot-led/main.py"]
+CMD ["python", "/iot-led/app/main.py"]
